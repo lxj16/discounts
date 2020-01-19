@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpResponseRedirect
 from . import views
-from .forms import signUpForm
-from .models import User
+# from .forms import signUpForm
+# from .models import User
 
 # Create your views here.
 
@@ -22,11 +22,11 @@ def login(request):
 
 
 def signup(request):
-    form = signUpForm(request.POST or None)
+    # form = signUpForm(request.POST or None)
 
-    if request.method == 'POST' and form.is_valid():
-        new_user = form.save()
-        return HttpResponseRedirect('/')
+    # if request.method == 'POST' and form.is_valid():
+    #     new_user = form.save()
+    #     return HttpResponseRedirect('/')
     # form = forms.signUpForm()
     # if request == 'POST':
     #     form = forms.signUpForm(request.POST)
@@ -40,7 +40,8 @@ def signup(request):
 
     #     else:
     #         form = forms.signUpForm()
-    return render(request, 'discountsApp/signUp.html', {'form': form})
+    # return render(request, 'discountsApp/signUp.html', {'form': form})
+    return render(request, 'discountsApp/signUp.html')
 
 
 def forgotPassword(request):
