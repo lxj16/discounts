@@ -1,0 +1,38 @@
+{% extends './base.html' %} {% block content%}
+
+ {% if clothing %} 
+    {% for clothing_item in clothing %}
+    <div class="row">
+    
+    
+    <div class="card col-md-5 col-md-offset-3" style="width: 9rem;">
+        <img src="{{clothing_item.imglink}}" class="card-img-left" alt="Product" />
+        <div class="card-body">
+          <h5 class="card-title">{{ clothing_item.ProductName }}</h5>
+          <p class="card-text">
+            <s>{{ clothing_item.OriPrice }}$</s><br>
+            <b>{{ clothing_item.DisPrice }}$</b><br>
+            {{ clothing_item.showEndTime }}
+          </p>
+          <a href= "{{clothing_item.Shoplink}}" class="btn btn-primary">Shop Now!</a>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}  
+ {% endif %}
+
+ <p>
+    {% if clothing_item.has_previous %}
+      <a href="?page={{ clothing_item.previous_page_number }}">Previous</a>
+      {% endif %}
+      
+      Page {{ clothing_item.number }} of {{ clothing_item.paginator.num_pages }}.
+      {% if clothing_item.has_next %}
+      <a href="?page={{ clothing_item.next_page_number }}">Next</a>
+    {% endif %}
+</p>
+
+
+
+{%endblock%}
