@@ -14,12 +14,39 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from django.urls import include
-from discountsApp import views
+from django.contrib.auth import views as auth_views
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from discountsApp import views as user_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.main_page),
+    path('', user_views.main_page),
+    path('signup/', user_views.signUp, name='signUp'),
+    path('signin/', auth_views.LoginView.as_view(template_name='discountsApp/signIn.html'), name='signIn'),
+    path('signout/', auth_views.LogoutView.as_view(
+        template_name='discountsApp/signOut.html'), name='signOut'),
+    path('password-reset/',
+         auth_views.PasswordResetView.as_view(
+             template_name='discountsApp/passwordReset.html'),
+         name='password_reset'),
+    path('password-reset/done/',
+         auth_views.PasswordResetDoneView.as_view(
+             template_name='discountsApp/passwordResetDone.html'),
+         name='password_reset_done'),
+    path('password-reset-confirm/<uidb64>/<token>/',
+         auth_views.PasswordResetConfirmView.as_view(
+             template_name='discountsApp/passwordResetConfirm.html'),
+         name='password_reset_confirm'),
+    path('password-reset-complete/',
+         auth_views.PasswordResetCompleteView.as_view(
+             template_name='discountsApp/passwordResetComplete.html'),
+         name='password_reset_complete'),
+    path('profile/', user_views.profile, name='profile'),
     path('discounts/', include('discountsApp.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
