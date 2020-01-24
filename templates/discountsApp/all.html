@@ -1,0 +1,38 @@
+{% extends './base.html' %} {% block content%}
+
+ {% if item_list %} 
+    {% for item in item_list %}
+    <div class="row">
+    
+    
+    <div class="card col-md-5 col-md-offset-3" style="width: 9rem;">
+        <img src="{{item.imglink}}" class="card-img-left" alt="Product" />
+        <div class="card-body">
+          <h5 class="card-title">{{ item.ProductName }}</h5>
+          <p class="card-text">
+            <s>{{ item.OriPrice }}$</s><br>
+            <b>{{ item.DisPrice }}$</b><br>
+            {{ item.showEndTime }}
+          </p>
+          <a href= "{{item.Shoplink}}" class="btn btn-primary">Shop Now!</a>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}  
+ {% endif %}
+
+ <p>
+ 
+    {% for page_number in item.paginator.page_range %}
+      {% ifequal page_number  item.number %}
+        {{ page_number }}
+      {% else %}
+        <a href="?page={{ page_number }}">{{ page_number }}</a>
+      {% endifequal %}
+    {% endfor %}
+  </p>
+
+
+
+{%endblock%}
