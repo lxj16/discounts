@@ -44,7 +44,7 @@ urlpatterns = [
              template_name='discountsApp/passwordResetComplete.html'),
          name='password_reset_complete'),
     path('profile/', user_views.profile, name='profile'),
-    path('discounts/', include('discountsApp.urls')),
+    path('discounts/', include('discountsApp.urls',namespace='discounts')),
 ]
 
 if settings.DEBUG:
