@@ -36,8 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'discountsApp.apps.DiscountsappConfig',
-    'crispy_forms',
+    'discountsApp.apps.DiscountsappConfig'
 ]
 
 MIDDLEWARE = [
@@ -122,16 +121,3 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-LOGIN_URL = 'signIn'
-LOGIN_REDIRECT_URL = 'discounts:discounts-main'
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'djangodiscountsite@gmail.com'
-EMAIL_HOST_PASSWORD = 'mixkcffhpndylvri'

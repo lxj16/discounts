@@ -3,10 +3,10 @@ from . import views
 
 app_name = 'discountsApp'
 urlpatterns = [
-    path('', views.index, name='discounts-main'),
-    # path('login/', views.login),
-    # path('signup/', views.signup),
-    # path('forgotpassword/', views.forgotPassword),
+    path('', views.index),
+    path('login/', views.login),
+    path('signup/', views.signup),
+    path('forgotpassword/', views.forgotPassword),
     #path('product/',views.product),
     path('all/',views.allPorduct),
     path('luxury/',views.luxury),
