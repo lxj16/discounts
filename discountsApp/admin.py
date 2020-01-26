@@ -10,11 +10,11 @@ from .models import Product
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     #all the info show to user
-    list_display =('Product_ID','ProductName','PubTime','Tag','click','isExpired')
+    list_display =('Product_ID','ProductName','PubTime','EndTime','Tag','click','isExpired')
 
     ordering = ('PubTime',)
 
-    list_editable = ['ProductName','Tag']
+    list_editable = ['ProductName','Tag','EndTime']
 
     date_hierarchy = 'PubTime'
 
