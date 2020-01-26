@@ -1,5 +1,5 @@
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
@@ -238,3 +238,36 @@ def profile(request):
         'user_profile_update_form': user_profile_update_form
     }
     return render(request, 'discountsApp/profile.html', context)
+
+@login_required
+def add_to_wishlist(request, id):
+    product = get_object_or_404(Product,pk=id)
+    user_profile = request.user.profile
+    if not user_profile.wishlisted_products.filter(Product_ID=id):
+        user_profile.wishlisted_products.add(product)
+        messages.success(request, f'Item added!')
+    else:
+        messages.warning(request, f'Item already in your wishlist!')
+    return redirect('discountsApp:discounts-main')
+
+@login_required
+def remove_from_wishlist(request, id):
+    product = get_object_or_404(Product,pk=id)
+    user_profile = request.user.profile
+    if user_profile.wishlisted_products.filter(Product_ID=id):
+        user_profile.wishlisted_products.remove(product)
+        messages.success(request, f'Item removed!')
+
+    return redirect('discountsApp:wishlist')
+
+
+
+@login_required
+def wishlist(request):
+    user_profile = request.user.profile
+    wishlisted_products = user_profile.wishlisted_products.all()
+    context = {
+        'wishlisted_products': wishlisted_products
+    }
+
+    return render(request, 'discountsApp/wishlist.html',context)

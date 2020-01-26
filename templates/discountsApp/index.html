@@ -14,6 +14,9 @@
                 Endding Time:{{ product_spe.showEndTime }}
               </p>
               <a href= "{{product_spe.Shoplink}}" class="btn btn-primary">Shop Now!</a>
+              {% if user.is_authenticated %}
+                <a href="{% url 'discountsApp:add-product' id=product_spe.Product_ID %}" class="btn btn-secondary">Add to wishlist</a>
+              {% endif %}
             </div>
           </div>
 
@@ -36,6 +39,9 @@
                 {{ product_lc.showEndTime }}
               </p>
               <a href= "{{product_lc.Shoplink}}" class="btn btn-primary">Shop Now!</a>
+              {% if user.is_authenticated %}
+                <a href="{% url 'discountsApp:add-product' id=product_lc.Product_ID %}" class="btn btn-secondary">Add to wishlist</a>
+              {% endif %}
             </div>
           </div>
 
@@ -58,6 +64,9 @@
                 {{ product_luxury.showEndTime }}
               </p>
               <a href= "{{product_luxury.Shoplink}}" class="btn btn-primary">Shop Now!</a>
+              {% if user.is_authenticated %}
+                <a href="{% url 'discountsApp:add-product' id=product_luxury.Product_ID %}" class="btn btn-secondary">Add to wishlist</a>
+              {% endif %}
             </div>
           </div>
 
