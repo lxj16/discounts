@@ -61,17 +61,6 @@ def index(request):
 def allPorduct(request):
     item_list = Product.objects.order_by('PubTime')
 
-    
-    # paginator = Paginator(item_list,2)
-
-
-    # page = request.GET.get('page') 
-    # try:
-    #     item_list = paginator.page(page)  
-    # except PageNotAnInteger:  
-    #     item_list = paginator.page(1) 
-    # except EmptyPage:  
-    #     item_list = paginator.page(paginator.num_pages)  
 
     context={
         'item_list':item_list,
@@ -159,16 +148,7 @@ def lastChancePage(request):
     for item in endding_item_list:
         if item.EndTime - datetime.timedelta(days=2)< now:
                 lastchance.append(item)
-    # paginator = Paginator(clothing,2)
-    # #luxury_item_list = paginator.page(1)
 
-    # page = request.GET.get('page') 
-    # try:
-    #     lastchance = paginator.page(page)  
-    # except PageNotAnInteger:  
-    #     lastchance = paginator.page(1) 
-    # except EmptyPage:  
-    #     lastchance = paginator.page(paginator.num_pages)  
 
     context={
         'lastchance':lastchance,

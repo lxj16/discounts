@@ -12,7 +12,7 @@
                 <p class="card-text">
                     <s>{{ product.OriPrice }}$</s><br>
                     <b>{{ product.DisPrice }}$</b><br>
-                    Endding Time:{{ product_spe.showEndTime }}
+                    Endding Time:{{ product.showEndTime }}
                 </p>
                 <a href= "{{product_spe.Shoplink}}" class="btn btn-primary">Shop Now!</a>
                 {% if user.is_authenticated %}
