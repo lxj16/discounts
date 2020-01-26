@@ -89,6 +89,9 @@
                 {{ product_electronic.showEndTime }}
               </p>
               <a href= "{{product_electronic.Shoplink}}" class="btn btn-primary">Shop Now!</a>
+              {% if user.is_authenticated %}
+                <a href="{% url 'discountsApp:add-product' id=product_electronic.Product_ID %}" class="btn btn-secondary">Add to wishlist</a>
+              {% endif %}
             </div>
           </div>
 
@@ -112,12 +115,15 @@
                 {{ product_clothing.showEndTime }}
               </p>
               <a href= "{{product_clothing.Shoplink}}" class="btn btn-primary">Shop Now!</a>
+              {% if user.is_authenticated %}
+                <a href="{% url 'discountsApp:add-product' id=product_clothing.Product_ID %}" class="btn btn-secondary">Add to wishlist</a>
+              {% endif %}
             </div>
           </div>
 
         {% endfor %}
 
-    </div>
+      </div>
     </div>
 
 
