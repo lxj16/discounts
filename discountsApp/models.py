@@ -3,26 +3,7 @@ from django.contrib.auth.models import User
 from PIL import Image
 from django.utils import timezone
 import datetime
-# Create your models here.
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='default_pic.png', upload_to='profile_pics')
-
-    def __str__(self):
-        return f'{self.user.username}' 
-
-    def save(self, *args, **kwargs):
-        super().save()
-        img = Image.open(self.image.path)
-        
-        if img.height > 400 or img.width > 400:
-            output_size = (400, 400)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
-
-
-# Create your models here.
 class Product(models.Model):
 
     Product_ID = models.AutoField(primary_key=True) 
@@ -55,3 +36,20 @@ class Product(models.Model):
 
     def showEndTime(self):
         return self.EndTime.strftime('%D')
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(default='default_pic.png', upload_to='profile_pics')
+    wishlisted_products= models.ManyToManyField(Product)
+
+    def __str__(self):
+        return f'{self.user.username}' 
+
+    def save(self, *args, **kwargs):
+        super().save()
+        img = Image.open(self.image.path)
+        
+        if img.height > 400 or img.width > 400:
+            output_size = (400, 400)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
