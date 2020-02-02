@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.template import loader
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 from . import views
 from .forms import UserSignUpForm, UserUpdateForm, UserProfileUpdateForm
 from django.contrib import messages
@@ -11,15 +11,11 @@ import datetime
 from django.utils import timezone
 from .models import Product
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-# from .forms import signUpForm
-# from .models import User
 
-# Create your views here.
 
 
 def main_page(request):
     return render(request, 'discountsApp/mainPage.html')
-
 
 def index(request):
     latest_item_list = Product.objects.order_by('PubTime')
@@ -43,7 +39,8 @@ def index(request):
             if now - latest_item_list[i].PubTime < datetime.timedelta(days=1) and len(TodaySpecial)<4:
                 TodaySpecial.append(latest_item_list[i])
     for j in range(len(endding_item_list)):
-        if endding_item_list[j].EndTime - datetime.timedelta(days=2)< now and len(lastChance)<4:
+        print()
+        if endding_item_list[j].EndTime - datetime.timedelta(days=2)< now and len(lastChance)<4 and endding_item_list[j].isExpired() ==False:
                 lastChance.append(endding_item_list[j])
 
     context ={
@@ -57,6 +54,12 @@ def index(request):
     }
     return render(request,'discountsApp/index.html',context)
 
+def search(request):
+    keyWord = request.POST.get('keyWord',"")
+    print('keyword is',keyWord)
+    response ={'keyWord':keyWord}
+    # return JsonResponse(response)
+    return HttpResponse(request.POST.items())
 
 def allPorduct(request):
     item_list = Product.objects.order_by('PubTime')
@@ -76,7 +79,7 @@ def luxury(request):
             luxury.append(item)
     
     paginator = Paginator(luxury,2)
-    #luxury_item_list = paginator.page(1)
+   
 
     page = request.GET.get('page') 
     try:
@@ -91,7 +94,6 @@ def luxury(request):
     }  
     return render(request,'discountsApp/luxury.html',context)
 
-
 def electronic (request):
     item_list = Product.objects.all()
     electronic  =[]
@@ -101,7 +103,7 @@ def electronic (request):
             electronic.append(item)
     
     paginator = Paginator(electronic,2)
-    #luxury_item_list = paginator.page(1)
+   
 
     page = request.GET.get('page') 
     try:
@@ -125,7 +127,7 @@ def clothing (request):
             clothing.append(item)
     
     paginator = Paginator(clothing,2)
-    #luxury_item_list = paginator.page(1)
+ 
 
     page = request.GET.get('page') 
     try:
@@ -139,7 +141,6 @@ def clothing (request):
         'clothing':clothing,
     }  
     return render(request,'discountsApp/clothing.html',context)
-
 
 def lastChancePage(request):
     endding_item_list = Product.objects.order_by('EndTime')
@@ -155,9 +156,6 @@ def lastChancePage(request):
     }  
     return render(request,'discountsApp/lastChance.html',context)
 
-
-# def signIn(request):
-#     return render(request, 'discountsApp/signIn.html')
 
 
 def signUp(request):
@@ -191,11 +189,6 @@ def signUp(request):
     #         form = forms.signUpForm()
     # return render(request, 'discountsApp/signUp.html', {'form': form})
     return render(request, 'discountsApp/signUp.html', {'form': form})
-
-
-# def forgotPassword(request):
-#     return render(request, 'discountsApp/forgotPassword.html')
-
 
 @login_required
 def profile(request):
@@ -239,8 +232,6 @@ def remove_from_wishlist(request, id):
         messages.success(request, f'Item removed!')
 
     return redirect('discountsApp:wishlist')
-
-
 
 @login_required
 def wishlist(request):
