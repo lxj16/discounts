@@ -55,11 +55,11 @@ def index(request):
     return render(request,'discountsApp/index.html',context)
 
 def search(request):
-    keyWord = request.POST.get('keyWord',"")
-    print('keyword is',keyWord)
-    response ={'keyWord':keyWord}
-    # return JsonResponse(response)
-    return HttpResponse(request.POST.items())
+    test = request.POST.get('test',"????")
+    print('keyword is',test)
+    response ={'keyWord':123}
+    return JsonResponse(response)
+    #return HttpResponse(request.POST.items())
 
 def allPorduct(request):
     item_list = Product.objects.order_by('PubTime')

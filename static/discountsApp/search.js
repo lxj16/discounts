@@ -1,12 +1,14 @@
 $(document).ready(function() {
 
     document.getElementById("ProductsSearch").onsubmit = function() {doTheSearch()}
-    console.log($('#searchKeyWord').val());
+    //console.log($('#searchKeyWord').val());
+    console.log(getFormData($("#ProductsSearch")))
+    console.log($("#ProductsSearch").attr("method"))
 });
 
 function doTheSearch(){
 
-    var keyWord = {'keyWord':($('#searchKeyWord').val())}; 
+    var keyWord =$('#searchKeyWord').val(); 
     console.log(keyWord)
 
     $.ajax({
@@ -14,11 +16,12 @@ function doTheSearch(){
         url: $("#ProductsSearch").attr("action"),
         type: $("#ProductsSearch").attr("method"),
         //data:document.getElementById("ProductsSearch").value,
-        data: getFormData($("#ProductsSearch")),
-        //data: keyWord,
+        //data: getFormData($("#ProductsSearch")),
+        data: {'test':123123 },
+      
 
         success: function(data) {
-            console.log(data.keyWord) 
+            console.log(data) 
         },
         error: function(data){
             console.log('sth worng')
